@@ -20,6 +20,7 @@
     <li><a href="Exo5.php">Exo45 Alliance Personnage</a></li>
     <li><a href="ExoJS.php">ExoJS</a></li>
     <li><a href="testAPI.php">TestAPI</a></li>
+    <li><a href="CRUD_Read.php">CRUD Objet Read</a></li>
 
 
 </ul>

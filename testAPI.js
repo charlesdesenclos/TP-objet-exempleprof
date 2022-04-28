@@ -3,7 +3,7 @@ DivAttaquante.addEventListener("click",attaque);
 DivAttaquante.addEventListener("mouseover",reset);
 
 function attaque(e){
-   e.target.innerHTML = "Aie";
+   e.target.innerHTML = "paff";
    fetch('API_attaque.php')
    .then((resp)=>resp.json())
    .then( function(data){

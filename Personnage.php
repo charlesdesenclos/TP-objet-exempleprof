@@ -9,7 +9,7 @@ class Personnage{
     private $vie_;
     private $forceAttaque_;
     private $tabPersoAllies_ = array();
-    private $PDO_ = array();
+    private $PDO_ ;
 
 
 
@@ -19,9 +19,26 @@ class Personnage{
         $this->pseudo_ = $pseudo;
         $this->forceAttaque_ = $forceAttaque;
         $this->PDO_ = $pdo;
+    }
 
-   
+    public function getAllPersonnage(){
+        
+        $sql = "select * from Personnage";
+        echo $sql ;
+        $Response = $this->PDO_->query($sql);
+        $TableauPersonnage = array();
+        while ($donnees = $reponses->fetch())
+        {
+            //ORM je met les infos du tuple ( issu de la bdd)
+            //dans un nouvel objet Personnage que je stock dans un tableau de PErso
+            $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$pdo);
 
+
+            //ON Stock tous les personnages dans un tableau pour l'utiliser dans notre page
+            array_push($TableauPersonnage,$Perso);
+        } 
+
+        return $TableauPersonnage;
     }
 
     public function setAllies(){
@@ -49,7 +66,6 @@ class Personnage{
             array_push($this->tabPersoAllies_,new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_));
         } 
     }
-
     public function getId(){
         return $this->id_;
     }
