@@ -1,6 +1,15 @@
 
 <?php include ("Personnage.php");
-highlight_file(__FILE__); ?>
+highlight_file(__FILE__);
+
+try {
+    // ---------------Connexion à la BDD et récupération et traitement du formulaire
+    $pdo = new PDO('mysql:host=192.168.65.193;dbname=Combat', 'UserWeb', 'UserWeb');
+} catch (Exception  $error) {
+    $error->getMessage();
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -14,5 +23,17 @@ highlight_file(__FILE__); ?>
 </head>
 <body>
     <h1> CRUD De Personnage </h1>
+    <?php
+        $Perso1 = new Personnage(null,null,null,null,$pdo);
+        $tabPersonnage = $Perso1->getAllPersonnage();
+        echo "<ul>";
+        foreach ($tabPersonnage as $Perso) {
+            echo "<li>";
+            echo $Perso->getPseudo();
+            echo "</li>";
+        }
+        echo "</ul>";
+    ?>
+
 </body>
 </html>
