@@ -5,6 +5,7 @@ highlight_file(__FILE__);
 
 class Personnage{
     private $id_;
+    private $image_;
     private $pseudo_;
     private $vie_;
     private $forceAttaque_;
@@ -13,12 +14,13 @@ class Personnage{
 
 
 
-    public function __construct($id,$pseudo,$vie,$forceAttaque,$pdo){
+    public function __construct($id,$pseudo,$vie,$forceAttaque,$pdo,$image){
         $this->id_=$id;
         $this->vie_=$vie;
         $this->pseudo_ = $pseudo;
         $this->forceAttaque_ = $forceAttaque;
         $this->PDO_ = $pdo;
+        $this->image_ = $image;
     }
 
     public function getAllPersonnage(){
@@ -31,7 +33,7 @@ class Personnage{
         {
             //ORM je met les infos du tuple ( issu de la bdd)
             //dans un nouvel objet Personnage que je stock dans un tableau de PErso
-            $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_);
+            $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_,$donnees['image']);
 
 
             //ON Stock tous les personnages dans un tableau pour l'utiliser dans notre page
@@ -78,6 +80,10 @@ class Personnage{
     public function getPseudo(){
         return $this->pseudo_;
     }
+    public function getImage(){
+        return $this->image_;
+    }
+
 
     public function attaque($UnAutrePerso){
         $UnAutrePerso->defendre($this->forceAttaque_);

@@ -24,12 +24,13 @@ try {
 <body>
     <h1> CRUD De Personnage </h1>
     <?php
-        $Perso1 = new Personnage(null,null,null,null,$pdo);
+        $Perso1 = new Personnage(null,null,null,null,$pdo,null);
         $tabPersonnage = $Perso1->getAllPersonnage();
         echo "<ul>";
         foreach ($tabPersonnage as $Perso) {
             echo "<li>";
             echo $Perso->getPseudo();
+            echo '<img width="100px" src="'.$Perso->getImage().'" alt="'.$Perso->getPseudo().'">';
             echo "</li>";
         }
         echo "</ul>";
