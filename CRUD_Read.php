@@ -23,6 +23,7 @@ try {
 </head>
 <body>
     <h1> CRUD De Personnage </h1>
+    <h2>(READ Select) </h2>
     <?php
         $Perso1 = new Personnage(null,null,null,null,$pdo,null);
         $tabPersonnage = $Perso1->getAllPersonnage();
@@ -35,6 +36,7 @@ try {
         }
         echo "</ul>";
     ?>
+    <h2>(CREATE Insert) </h2>
 
 </body>
 </html>
