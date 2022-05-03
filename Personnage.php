@@ -12,8 +12,6 @@ class Personnage{
     private $tabPersoAllies_ = array();
     private $PDO_ ;
 
-
-
     public function __construct($id,$pseudo,$vie,$forceAttaque,$pdo,$image){
         $this->id_=$id;
         $this->vie_=$vie;
@@ -22,7 +20,6 @@ class Personnage{
         $this->PDO_ = $pdo;
         $this->image_ = $image;
     }
-
     public function getAllPersonnage(){
         
         $sql = "select * from Personnage";
@@ -40,7 +37,6 @@ class Personnage{
 
         return $TableauPersonnage;
     }
-
     public function setAllies(){
         //ici on va récupérer ses allies.
         $sql = "select Personnage.id,Personnage.pseudo,Personnage.vie,Personnage.forceAttaque
@@ -96,8 +92,6 @@ class Personnage{
         $this->forceAttaque_ = $donnees['forceAttaque'];
 
     }
-
-
     public function attaque($UnAutrePerso){
         $UnAutrePerso->defendre($this->forceAttaque_);
     }
@@ -112,7 +106,6 @@ class Personnage{
             </div>
         <?php
     }
-
     public function saveInBdd(){
         //1 cas INSERT si id = null
         if(is_null($this->id_) ){

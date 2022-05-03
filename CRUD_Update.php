@@ -27,79 +27,72 @@ try {
     <h3>Choix du perso à modifier</h3>
 
     <?php
-         $Perso1 = new Personnage(null,null,null,null,$pdo,null);
-        //Traitetement du formulaire du choix du perso
-        if(isset($_GET['btnModifier'])){
-            $Perso1->getPersonnageById($_GET['idCombatant']);
-        }
+    $Perso1 = new Personnage(null,null,null,null,$pdo,null);
+    //Traitetement du formulaire du choix du perso
+    if(isset($_GET['btnModifier'])){
+        $Perso1->getPersonnageById($_GET['idCombatant']);
+    }
 
-        if(isset($_POST['btnConfirmerUpdate'])){
-                $Perso1 = new Personnage(
-                    $_POST['idCombatant'], //viens du champ input type hidden
-                    $_POST['pseudo'],
-                    $_POST['vie'],
-                    $_POST['forceAttaque'],
-                    $pdo,
-                    $_POST['image']);
-                $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
-        }
+    if(isset($_POST['btnConfirmerUpdate'])){
+            $Perso1 = new Personnage(
+                $_POST['idCombatant'], //viens du champ input type hidden
+                $_POST['pseudo'],
+                $_POST['vie'],
+                $_POST['forceAttaque'],
+                $pdo,
+                $_POST['image']);
+            $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
+    }
 
-        //--------------------Choix Perso-------------
-        
-        $tabPersonnage = $Perso1->getAllPersonnage();
-        ?>
-        <form action="" method="get">
-            <select id="idCombatant" name="idCombatant">
-                <?php
-                foreach ($tabPersonnage as  $ThePerso) {
-                    echo '<option value="'.$ThePerso->getId().'">'.$ThePerso->getPseudo().'</option>';
-                    //echo "perso :".."</br>";
-                }
-                ?>
-            </select>
-            <input type="submit" value="Choix du Perso" name="btnModifier">
-        </form>
+    //--------------------Choix Perso-------------
+    $tabPersonnage = $Perso1->getAllPersonnage();
+    ?>
+    <form action="" method="get">
+        <select id="idCombatant" name="idCombatant">
             <?php
-        
-        //Formulaire HTML
-        //je dois avoir $id,$pseudo,$vie,$forceAttaque,$pdo,$image
-        // id sera null car il n'est pas encore en BDD
-        ?>
+            foreach ($tabPersonnage as  $ThePerso) {
+                echo '<option value="'.$ThePerso->getId().'">'.$ThePerso->getPseudo().'</option>';
+            }
+            ?>
+        </select>
+        <input type="submit" value="Choix du Perso" name="btnModifier">
+    </form>
 
-        <form action="" method="post" >
-      
-            <label for="pseudo">Pseudo: </label>
-            <input type="text" name="pseudo" id="pseudo" required value="<?php echo $Perso1->getPseudo(); ?>">
+    <?php
+    //Formulaire HTML de modification -------------------------------------
+    //je dois avoir $id,$pseudo,$vie,$forceAttaque,$pdo,$image
+    // id sera caché car il est utilisé pour la condition where de l'update
+    ?>
 
-            <label for="vie">Vie: </label>
-            <input type="text" name="vie" id="vie" required value="<?php echo $Perso1->getVie(); ?>">
+    <form action="" method="post" >
+    
+        <label for="pseudo">Pseudo: </label>
+        <input type="text" name="pseudo" id="pseudo" required value="<?php echo $Perso1->getPseudo(); ?>">
 
-            <label for="forceAttaque">Attaques: </label>
-            <input type="text" name="forceAttaque" id="forceAttaque" value="<?php echo $Perso1->getForceAttaque(); ?>" required>
-      
-            <label for="image">Lien Image: </label>
-            <input type="text" name="image" id="image" required value="<?php echo $Perso1->getImage(); ?>">
-       
-            <input type="Hidden" name="idCombatant" id="idCombatant" required value="<?php echo $Perso1->getId(); ?>">
+        <label for="vie">Vie: </label>
+        <input type="text" name="vie" id="vie" required value="<?php echo $Perso1->getVie(); ?>">
 
-            <input type="submit" name="btnConfirmerUpdate" value="Confirmer l'Update">
-        
-        </form>
-
-
-        <?php
-        
+        <label for="forceAttaque">Attaques: </label>
+        <input type="text" name="forceAttaque" id="forceAttaque" value="<?php echo $Perso1->getForceAttaque(); ?>" required>
+    
+        <label for="image">Lien Image: </label>
+        <input type="text" name="image" id="image" required value="<?php echo $Perso1->getImage(); ?>">
+    
+        <input type="Hidden" name="idCombatant" id="idCombatant" required value="<?php echo $Perso1->getId(); ?>">
+        <input type="submit" name="btnConfirmerUpdate" value="Confirmer l'Update">
+    
+    </form>
 
 
-        echo "<ul>";
-        foreach ($tabPersonnage as $Perso) {
-            echo "<li>";
-            echo $Perso->getPseudo();
-            echo '<img width="100px" src="'.$Perso->getImage().'" alt="'.$Perso->getPseudo().'">';
-            echo "</li>";
-        }
-        echo "</ul>";
-        
+    <?php 
+    echo "<ul>";
+    foreach ($tabPersonnage as $Perso) {
+        echo "<li>";
+        echo $Perso->getPseudo();
+        echo '<img width="100px" src="'.$Perso->getImage().'" alt="'.$Perso->getPseudo().'">';
+        echo "</li>";
+    }
+    echo "</ul>";
     ?>
   
 

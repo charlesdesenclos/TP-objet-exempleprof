@@ -1,4 +1,5 @@
-﻿<?php
+﻿
+<?php
 echo "Chargement Class User";
 class User{
 
