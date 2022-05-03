@@ -30,13 +30,10 @@ try {
          $Perso1 = new Personnage(null,null,null,null,$pdo,null);
         //Traitetement du formulaire du choix du perso
         if(isset($_GET['btnModifier'])){
-
-            
             $Perso1->getPersonnageById($_GET['idCombatant']);
         }
 
         if(isset($_POST['btnConfirmerUpdate'])){
-            
                 $Perso1 = new Personnage(
                     $_POST['idCombatant'], //viens du champ input type hidden
                     $_POST['pseudo'],
@@ -44,10 +41,25 @@ try {
                     $_POST['forceAttaque'],
                     $pdo,
                     $_POST['image']);
-    
                 $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
-            
         }
+
+        //--------------------Choix Perso-------------
+        
+        $tabPersonnage = $Perso1->getAllPersonnage();
+        ?>
+        <form action="" method="get">
+            <select id="idCombatant" name="idCombatant">
+                <?php
+                foreach ($tabPersonnage as  $ThePerso) {
+                    echo '<option value="'.$ThePerso->getId().'">'.$ThePerso->getPseudo().'</option>';
+                    //echo "perso :".."</br>";
+                }
+                ?>
+            </select>
+            <input type="submit" value="Choix du Perso" name="btnModifier">
+        </form>
+            <?php
         
         //Formulaire HTML
         //je dois avoir $id,$pseudo,$vie,$forceAttaque,$pdo,$image
@@ -77,22 +89,7 @@ try {
 
         <?php
         
-       //--------------------READ-------------
-        $Perso1 = new Personnage(null,null,null,null,$pdo,null);
-        $tabPersonnage = $Perso1->getAllPersonnage();
-        ?>
-        <form action="" method="get">
-            <select id="idCombatant" name="idCombatant">
-                <?php
-                foreach ($tabPersonnage as  $ThePerso) {
-                    echo '<option value="'.$ThePerso->getId().'">'.$ThePerso->getPseudo().'</option>';
-                    //echo "perso :".."</br>";
-                }
-                ?>
-            </select>
-            <input type="submit" value="modifier" name="btnModifier">
-        </form>
-            <?php
+
 
         echo "<ul>";
         foreach ($tabPersonnage as $Perso) {

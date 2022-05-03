@@ -26,7 +26,6 @@ class Personnage{
     public function getAllPersonnage(){
         
         $sql = "select * from Personnage";
-        echo $sql ;
         $reponses = $this->PDO_->query($sql);
         $TableauPersonnage = array();
         while ($donnees = $reponses->fetch())
@@ -34,7 +33,6 @@ class Personnage{
             //ORM je met les infos du tuple ( issu de la bdd)
             //dans un nouvel objet Personnage que je stock dans un tableau de PErso
             $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_,$donnees['image']);
-
 
             //ON Stock tous les personnages dans un tableau pour l'utiliser dans notre page
             array_push($TableauPersonnage,$Perso);
@@ -88,7 +86,7 @@ class Personnage{
     }
     public function getPersonnageById($id){
         $sql = "select * from Personnage where id ='".$id."'";
-        echo $sql ;
+        //echo $sql ;
         $reponses = $this->PDO_->query($sql);
         $donnees = $reponses->fetch();
         $this->id_ =  $donnees['id'];
@@ -97,7 +95,6 @@ class Personnage{
         $this->vie_= $donnees['vie'];
         $this->forceAttaque_ = $donnees['forceAttaque'];
 
-       
     }
 
 
@@ -118,7 +115,7 @@ class Personnage{
 
     public function saveInBdd(){
         //1 cas INSERT si id = null
-        if(isnull($this->id_) ){
+        if(is_null($this->id_) ){
             $sql = "INSERT INTO `Personnage` 
             (`id`, `image`, `pseudo`, `vie`, `forceAttaque`)
             VALUES 
