@@ -16,7 +16,7 @@ try {
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Exo1</title>
+    <title>CRUD</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
@@ -34,14 +34,15 @@ try {
     }
 
     if(isset($_POST['btnConfirmerUpdate'])){
-            $Perso1 = new Personnage(
-                $_POST['idCombatant'], //viens du champ input type hidden
-                $_POST['pseudo'],
-                $_POST['vie'],
-                $_POST['forceAttaque'],
-                $pdo,
-                $_POST['image']);
-            $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
+        $Perso1 = new Personnage(
+            $_POST['idCombatant'], //viens du champ input type hidden
+            $_POST['pseudo'],
+            $_POST['vie'],
+            $_POST['forceAttaque'],
+            $pdo,
+            $_POST['image']
+        );
+        $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
     }
 
     //--------------------Choix Perso-------------
@@ -77,24 +78,20 @@ try {
     
         <label for="image">Lien Image: </label>
         <input type="text" name="image" id="image" required value="<?php echo $Perso1->getImage(); ?>">
-    
+
+        <!-- le champ hidden permet de mettre un id dans un input caché-->
         <input type="Hidden" name="idCombatant" id="idCombatant" required value="<?php echo $Perso1->getId(); ?>">
+       
         <input type="submit" name="btnConfirmerUpdate" value="Confirmer l'Update">
     
     </form>
 
-
     <?php 
-    echo "<ul>";
-    foreach ($tabPersonnage as $Perso) {
-        echo "<li>";
-        echo $Perso->getPseudo();
-        echo '<img width="100px" src="'.$Perso->getImage().'" alt="'.$Perso->getPseudo().'">';
-        echo "</li>";
-    }
-    echo "</ul>";
+    if(!is_null($Perso1->getId())){
+        echo $Perso1->getPseudo();
+        echo '<img width="100px" src="'.$Perso1->getImage().'" alt="'.$Perso1->getPseudo().'">';
+    }      
     ?>
   
-
 </body>
 </html>

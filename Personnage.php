@@ -134,6 +134,18 @@ class Personnage{
         //2 cas UDPATE si id > 0
 
     }
+    public function delete(){
+        //1 cas INSERT si id = null
+        if(!is_null($this->id_) ){
+            $sql = "DELETE FROM `Personnage` 
+            WHERE
+            `id` = '". $this->id_."'
+            ";
+            //echo $sql ;
+            $reponses = $this->PDO_->query($sql);
+            $this->id_ = null;
+        }
+    }
 }
 //----------------------------FIN CLASS PERSONNAGE---------------------------------------
 
