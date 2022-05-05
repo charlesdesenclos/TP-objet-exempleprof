@@ -11,14 +11,18 @@ class Personnage{
     private $forceAttaque_;
     private $tabPersoAllies_ = array();
     private $PDO_ ;
+    //permet de faire la relation 1-N
+    //entre un User qui peut avoir N Personnage
+    private $idUser_;
 
-    public function __construct($id,$pseudo,$vie,$forceAttaque,$pdo,$image){
+    public function __construct($id,$pseudo,$vie,$forceAttaque,$pdo,$image,$idUser){
         $this->id_=$id;
         $this->vie_=$vie;
         $this->pseudo_ = $pseudo;
         $this->forceAttaque_ = $forceAttaque;
         $this->PDO_ = $pdo;
         $this->image_ = $image;
+        $this->idUser_ = $idUser;
     }
     public function getAllPersonnage(){
         
@@ -29,7 +33,7 @@ class Personnage{
         {
             //ORM je met les infos du tuple ( issu de la bdd)
             //dans un nouvel objet Personnage que je stock dans un tableau de PErso
-            $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_,$donnees['image']);
+            $Perso = new Personnage($donnees['id'],$donnees['pseudo'],$donnees['vie'],$donnees['forceAttaque'],$this->PDO_,$donnees['image'],$donnees['idUser']);
 
             //ON Stock tous les personnages dans un tableau pour l'utiliser dans notre page
             array_push($TableauPersonnage,$Perso);
@@ -110,9 +114,9 @@ class Personnage{
         //1 cas INSERT si id = null
         if(is_null($this->id_) ){
             $sql = "INSERT INTO `Personnage` 
-            (`id`, `image`, `pseudo`, `vie`, `forceAttaque`)
+            (`id`, `image`, `pseudo`, `vie`, `forceAttaque`, `idUser`)
             VALUES 
-            (NULL, '".$this->image_."', '".$this->pseudo_."', '".$this->vie_."', '".$this->forceAttaque_."');";
+            (NULL, '".$this->image_."', '".$this->pseudo_."', '".$this->vie_."', '".$this->forceAttaque_."', '".$this->idUser_."');";
             //echo $sql ;
             $reponses = $this->PDO_->query($sql);
             //attention il faut protéger son code dans un transaction pour ne pas récupére l'id dans autre visiteur
@@ -122,8 +126,9 @@ class Personnage{
             `image`='".$this->image_."',
             `pseudo`='".$this->pseudo_."',
             `vie`='".$this->vie_."',
-            `forceAttaque`='".$this->forceAttaque_."'
-             WHERE
+            `forceAttaque`='".$this->forceAttaque_."',
+            `idUser`='".$this->idUser_."'
+            WHERE
             `id` = '".$this->id_."'";
             //echo $sql ;
             $reponses = $this->PDO_->query($sql);

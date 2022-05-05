@@ -1,5 +1,8 @@
 
-<?php include ("Personnage.php");
+<?php 
+session_start();
+include ("Personnage.php");
+include ("User.php");
 highlight_file(__FILE__);
 
 try {
@@ -25,15 +28,28 @@ try {
     <h1> CRUD De Personnage </h1>
     <h2>(CREATE Insert) </h2>
     <?php
+        //vérification de la connexion
+        $user1 = new User(null,$pdo);
+        if(!$user1 -> isConnect()){
+            ?>
+            <li><a href="Connexion.php">Connect toi </a></li>
+           <?php
+        }else{
+            $user1->afficheUser();
+        }
+
         //Traitetement du formulaire
         if(isset($_POST['btnValider'])){
+            //le nouveau Perso est créer avec sa relation 1N avec le User
+            //en effet on rajoute id du User dans le Personnage pour indiquer que c'est le personnage du user
             $Perso1 = new Personnage(
                 null, //id
                 $_POST['pseudo'],
                 $_POST['vie'],
                 $_POST['forceAttaque'],
                 $pdo,
-                $_POST['image']);
+                $_POST['image'],
+                $user1 ->getId());
 
             $Perso1->saveInBdd(); //voir la méthode saveInBdd dans l'objet Personnage
         }
@@ -65,7 +81,7 @@ try {
         <?php
         
        //--------------------READ-------------
-        $Perso1 = new Personnage(null,null,null,null,$pdo,null);
+        $Perso1 = new Personnage(null,null,null,null,$pdo,null,null);
         $tabPersonnage = $Perso1->getAllPersonnage();
         echo "<ul>";
         foreach ($tabPersonnage as $Perso) {
@@ -77,7 +93,5 @@ try {
         echo "</ul>";
         
     ?>
-  
-
 </body>
 </html>

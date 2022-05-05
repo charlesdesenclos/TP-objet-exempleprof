@@ -27,7 +27,7 @@ try {
     <h3>Choix du perso à modifier</h3>
 
     <?php
-    $Perso1 = new Personnage(null,null,null,null,$pdo,null);
+    $Perso1 = new Personnage(null,null,null,null,$pdo,null,null);
     //Traitetement du formulaire du choix du perso
     if(isset($_GET['btnModifier'])){
         $Perso1->getPersonnageById($_GET['idCombatant']);
